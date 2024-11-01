@@ -56,3 +56,15 @@ map("n", "[c", "<cmd>lua require('gitsigns').prev_hunk()<CR>", { desc = "Previou
 
 -- optional git line blame toggle
 map("n", "<Leader>gt", "<cmd>lua require('gitsigns').toggle_current_line_blame()<CR>", { desc = "Toggle git line blame" })
+
+-- C++ compilation and execution
+map("n", "<Leader>rc", function()
+  local filename = vim.fn.expand("%:p")
+  local output = vim.fn.expand("%:p:r")
+  vim.cmd(string.format("!g++ -o %s %s", output, filename))
+end, { desc = "Compile C++" })
+
+map("n", "<Leader>rr", function()
+  local output = vim.fn.expand("%:p:r")
+  vim.cmd(string.format("!%s", output))
+end, { desc = "Run compiled program" })

@@ -5,7 +5,7 @@ local lspconfig = require "lspconfig"
 local nvlsp = require "nvchad.configs.lspconfig"
 local util = require "lspconfig/util"
 -- EXAMPLE
-local servers = { "html", "cssls","pyright" }
+local servers = { "html", "cssls","pyright", "clangd" }
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config
@@ -40,6 +40,30 @@ end
     },
     single_file_support = true,
   }
+
+-- Add C/C++ specific configuration
+lspconfig.clangd.setup {
+  on_attach = nvlsp.on_attach,
+  capabilities = nvlsp.capabilities,
+  cmd = {
+    "clangd",
+    "--background-index",
+    "--suggest-missing-includes",
+    "--clang-tidy",
+    "--header-insertion=iwyu",
+  },
+  filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+  root_dir = util.root_pattern(
+    '.clangd',
+    '.clang-tidy',
+    '.clang-format',
+    'compile_commands.json',
+    'compile_flags.txt',
+    'configure.ac',
+    '.git'
+  ),
+  single_file_support = true,
+}
 -- configuring single server, example: typescript
 -- lspconfig.ts_ls.setup {
 --   on_attach = nvlsp.on_attach,

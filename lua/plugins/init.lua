@@ -200,4 +200,18 @@ return {
       "nvim-lua/plenary.nvim",
     },
   },
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    config = function()
+      require "configs.conform"
+    end,
+  },
+  {
+    "mfussenegger/nvim-lint",
+    event = { "BufWritePost", "BufReadPost", "InsertLeave" },
+    config = function()
+      require "configs.lint"
+    end,
+  }
 }
